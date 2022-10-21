@@ -41,7 +41,7 @@ public class AgentService implements Runnable {
 
     if (
       targetAgentId != null &&
-      Pattern.compile("\\d{,6}").matcher(targetAgentId.toString()).matches()
+      Pattern.compile("\\d{6}").matcher(targetAgentId.toString()).matches()
     ) {
       this.targetAgentId = Integer.parseInt(targetAgentId.toString());
     } else {
@@ -64,5 +64,7 @@ public class AgentService implements Runnable {
     }
 
     log.info("AgentService starts with [{} / {}]", targetDate, targetAgentId);
+
+    log.info("AgentService ends with [{} / {}]", targetDate, targetAgentId);
   }
 }
