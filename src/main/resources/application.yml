@@ -26,8 +26,8 @@ spring:
       port: 40022
       authentication-database: admin
       username: admin
-      database: deep_signal_dataextraction
       password: elqtlrmsjfadmin1!
+      database: deep_signal_dataextraction
 
 logging:
   config: classpath:logback-spring.xml
