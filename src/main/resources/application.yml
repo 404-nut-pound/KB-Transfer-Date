@@ -8,7 +8,7 @@ spring:
   main:
     web-application-type: none
   datasource:
-    url: jdbc:mariadb://125.138.183.144:3306/kb_db?allowMultiQueries=true
+    url: jdbc:mariadb://192.168.0.144:3306/kb_db?allowMultiQueries=true
     username: kb
     password: kb!!pass
     driver-class-name: org.mariadb.jdbc.Driver
@@ -22,7 +22,7 @@ spring:
         default_batch_fetch_size: 16
   data:
     mongodb:
-      host: 125.138.183.144
+      host: 192.168.2.141
       port: 27017
       authentication-database: admin
       username: admin
