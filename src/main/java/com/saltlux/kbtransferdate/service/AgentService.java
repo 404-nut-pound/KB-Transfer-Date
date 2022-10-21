@@ -3,14 +3,15 @@ package com.saltlux.kbtransferdate.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Component
-@Slf4j
 /**
  * 입력받는 명령어
- * 0 - agent
- * 1 - date(yyyyMMdd)
- * 2 - agentId(int)
+ * <p/>
+ * 0 - agent<p/>
+ * 1 - date(yyyyMMdd)<p/>
+ * 2 - agentId(int)<p/>
  */
+@Component
+@Slf4j
 public class AgentService implements Runnable {
 
   @Override
