@@ -1,0 +1,71 @@
+buildscript {
+  ext {
+    queryDslVersion = "5.0.0"
+  }
+}
+
+plugins {
+  id "org.springframework.boot" version "2.7.5"
+  id "io.spring.dependency-management" version "1.0.15.RELEASE"
+  id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+  id "java"
+}
+
+group = "com.saltlux"
+version = (findProperty("version") == "unspecified") ? "0.0.1" : version
+sourceCompatibility = "8"
+
+configurations {
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
+  querydsl.extendsFrom compileClasspath
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+  implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
+  implementation "org.springframework.boot:spring-boot-starter-webflux"
+  compileOnly "org.projectlombok:lombok"
+  runtimeOnly "org.mariadb.jdbc:mariadb-java-client"
+  annotationProcessor "org.projectlombok:lombok"
+  testImplementation "org.springframework.boot:spring-boot-starter-test"
+  testImplementation "io.projectreactor:reactor-test"
+  implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+  annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+}
+
+tasks.named("test") {
+  useJUnitPlatform()
+}
+
+gradle.taskGraph.beforeTask { Task task ->
+  println "executing $task ..."
+}
+
+gradle.taskGraph.afterTask { Task task, TaskState state ->
+  if (state.failure) {
+    println "$task Failed."
+  }
+  else {
+    println "$task Done"
+  }
+}
+
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+  jpa = true
+  querydslSourcesDir = querydslDir
+}
+sourceSets {
+  main.java.srcDir querydslDir
+}
+compileQuerydsl {
+  options.annotationProcessorPath = configurations.querydsl
+}
+//querydsl 추가 끝

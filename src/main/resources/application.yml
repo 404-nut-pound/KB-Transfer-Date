@@ -1,0 +1,42 @@
+spring:
+  config:
+    import:
+      - optional:classpath:/transfer.yml
+  output:
+    ansi:
+      enabled: always
+  main:
+    web-application-type: none
+  datasource:
+    url: jdbc:mariadb://125.138.183.144:3306/kb_db?allowMultiQueries=true
+    username: kb
+    password: kb!!pass
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+        default_batch_fetch_size: 16
+  data:
+    mongodb:
+      host: 125.138.183.144
+      port: 27017
+      authentication-database: admin
+      username: admin
+      database: deep_signal_dataextraction
+      password: elqtlrmsjfadmin1!
+
+logging:
+  config: classpath:logback-spring.xml
+  charset:
+    console: UTF-8
+    file: UTF-8
+  logback:
+    rollingpolicy:
+      max-history: 30
+      max-file-size: 100MB
+  level:
+    root: debug
