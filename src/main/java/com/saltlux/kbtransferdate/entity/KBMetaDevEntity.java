@@ -33,7 +33,7 @@ public class KBMetaDevEntity {
   private String categoryCode;
 
   @Column(name = "agentid")
-  private Integer agentId;
+  private String agentId;
 
   @Column(name = "pdfAgentid")
   private Integer pdfAgentId;

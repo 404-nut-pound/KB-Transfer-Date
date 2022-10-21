@@ -1,13 +1,15 @@
 package com.saltlux.kbtransferdate.service;
 
 import com.saltlux.kbtransferdate.entity.KBMetaDevEntity;
+import com.saltlux.kbtransferdate.entity.KBMongoCollection;
 import com.saltlux.kbtransferdate.repo.KBMetaDevQueryRepo;
+import com.saltlux.kbtransferdate.repo.KBMongoRepoImpl;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,13 +25,13 @@ public class AgentService implements Runnable {
 
   private String targetDate = null;
 
-  private int targetAgentId = 0;
+  private String targetAgentId = null;
 
   @Autowired
   private KBMetaDevQueryRepo kbMetaDevQueryRepo;
 
   @Autowired
-  private MongoTemplate mongoTemplate;
+  private KBMongoRepoImpl kbMongoRepoImpl;
 
   public AgentService() {
     Object targetDate = MDC.get("arg1");
@@ -54,7 +56,7 @@ public class AgentService implements Runnable {
       targetAgentId != null &&
       Pattern.compile("\\d{6}").matcher(targetAgentId.toString()).matches()
     ) {
-      this.targetAgentId = Integer.parseInt(targetAgentId.toString());
+      this.targetAgentId = targetAgentId.toString();
     } else {
       log.info("Target AgentId is null or not number.");
     }
@@ -68,7 +70,7 @@ public class AgentService implements Runnable {
       return;
     }
 
-    if (targetAgentId == 0) {
+    if (targetAgentId == null) {
       log.info("Target AgentId is null!");
 
       return;
@@ -85,6 +87,20 @@ public class AgentService implements Runnable {
     }
 
     KBMetaDevEntity kbMetaDevEntity = optionalKBMetaDevEntity.get();
+
+    log.debug(
+      "Selected Meta AgentId - {} / SiteCode - {} / CategoryCode - {}",
+      kbMetaDevEntity.getAgentId(),
+      kbMetaDevEntity.getSiteCode(),
+      kbMetaDevEntity.getCategoryCode()
+    );
+
+    List<KBMongoCollection> kbMongoCollectionList = kbMongoRepoImpl.getKBMongoCollectionListByAgentIdAndCreateDateBetween(
+      targetAgentId,
+      targetDate
+    );
+
+    log.debug("kbMongoCollectionList size - {}", kbMongoCollectionList.size());
 
     log.info("AgentService ends with [{} / {}]", targetDate, targetAgentId);
   }

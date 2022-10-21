@@ -15,7 +15,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 @Slf4j
 public class KbTransferDateApplication {
 
-  private static final long THREAD_WAIT_TIME_MILI = 5000;
+  private static final long THREAD_WAIT_TIME_MILI = 5 * 1000;
 
   private static final List<String> commandNameList = CommandEnum.getCommandNameList();
   private static final List<String> commandList = CommandEnum.getCommandList();

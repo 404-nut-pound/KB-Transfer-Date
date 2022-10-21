@@ -22,15 +22,15 @@ class KbTransferDateApplicationTests {
   @Test
   void getActivatedMetaByAgentIdTest() {
     Optional<KBMetaDevEntity> kbMetaDevEntity = kbMetaDevQueryRepo.getActivatedMetaByAgentId(
-      558894
+      "558894"
     );
 
-    System.out.println("kbMetaDevEntity - " + kbMetaDevEntity.hashCode());
+    System.out.println("kbMetaDevEntity - " + kbMetaDevEntity.get().toString());
   }
 
   @Test
-  void getActivatedMetaListTest() {
-    List<KBMetaDevEntity> kbMetaDevEntityList = kbMetaDevQueryRepo.getActivatedMetaList();
+  void getActivatedMetaListAllTest() {
+    List<KBMetaDevEntity> kbMetaDevEntityList = kbMetaDevQueryRepo.getActivatedMetaListAll();
 
     System.out.println(
       "kbMetaDevEntityList.size() - " + kbMetaDevEntityList.size()

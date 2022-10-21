@@ -16,12 +16,12 @@ public class KBMetaDevQueryRepo {
   private final JPAQueryFactory queryFactory;
 
   /**
-   * AgentId를 기준으로 활성화 된 메타 조회
+   * AgentId를 기준으로 활성화 된 메타 데이터 조회
    * @param agentId
    * @return
    */
   public Optional<KBMetaDevEntity> getActivatedMetaByAgentId(
-    final int agentId
+    final String agentId
   ) {
     return Optional.ofNullable(
       queryFactory
@@ -35,10 +35,10 @@ public class KBMetaDevQueryRepo {
   }
 
   /**
-   * 활성화 된 메타 목록 조회
+   * 활성화 된 메타 데이터 목록 조회
    * @return
    */
-  public List<KBMetaDevEntity> getActivatedMetaList() {
+  public List<KBMetaDevEntity> getActivatedMetaListAll() {
     return queryFactory
       .selectFrom(kBMetaDevEntity)
       .where(kBMetaDevEntity.status.eq("1"))
