@@ -25,7 +25,7 @@ public class AgentService implements Runnable {
 
   private String targetDate = null;
 
-  private String targetAgentId = null;
+  private Integer targetAgentId = null;
 
   @Autowired
   private KBMetaDevQueryRepo kbMetaDevQueryRepo;
@@ -56,7 +56,7 @@ public class AgentService implements Runnable {
       targetAgentId != null &&
       Pattern.compile("\\d{6}").matcher(targetAgentId.toString()).matches()
     ) {
-      this.targetAgentId = targetAgentId.toString();
+      this.targetAgentId = Integer.parseInt(targetAgentId.toString());
     } else {
       log.info("Target AgentId is null or not number.");
     }

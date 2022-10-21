@@ -33,7 +33,7 @@ public class KBMetaDevEntity {
   private String categoryCode;
 
   @Column(name = "agentid")
-  private String agentId;
+  private Integer agentId;
 
   @Column(name = "pdfAgentid")
   private Integer pdfAgentId;
@@ -60,7 +60,7 @@ public class KBMetaDevEntity {
 
   private String status;
 
-  private Integer isFileAgent;
+  private Boolean isFileAgent;
 
   private String structureTypeCode;
 
@@ -87,5 +87,5 @@ public class KBMetaDevEntity {
   @Column(name = "cardLastObjectid")
   private String cardLastObjectId;
 
-  private Integer isNewProductAgent;
+  private Boolean isNewProductAgent;
 }

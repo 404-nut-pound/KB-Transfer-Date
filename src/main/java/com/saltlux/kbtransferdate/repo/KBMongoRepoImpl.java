@@ -27,7 +27,7 @@ public class KBMongoRepoImpl {
    * @return
    */
   public List<KBMongoCollection> getKBMongoCollectionListByAgentIdAndCreateDateBetween(
-    final String agentId,
+    final int agentId,
     final String date
   ) {
     LocalDate fromDate = LocalDate.parse(
@@ -38,7 +38,7 @@ public class KBMongoRepoImpl {
 
     BasicQuery basicQuery = new BasicQuery(
       String.format(
-        "{'agentid': %s, _id: {$gt: ObjectId(\"%s\"), $lt: ObjectId(\"%s\")}}",
+        "{'agentid': %d, _id: {$gt: ObjectId(\"%s\"), $lt: ObjectId(\"%s\")}}",
         agentId,
         new ObjectId(AppUtil.getDateFromLocalDate(fromDate)),
         new ObjectId(AppUtil.getDateFromLocalDate(toDate))

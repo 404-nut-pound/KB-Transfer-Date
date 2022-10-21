@@ -22,7 +22,7 @@ class KbTransferDateApplicationTests {
   @Test
   void getActivatedMetaByAgentIdTest() {
     Optional<KBMetaDevEntity> kbMetaDevEntity = kbMetaDevQueryRepo.getActivatedMetaByAgentId(
-      "558894"
+      558894
     );
 
     System.out.println("kbMetaDevEntity - " + kbMetaDevEntity.get().toString());
@@ -79,7 +79,7 @@ class KbTransferDateApplicationTests {
     // );
 
     List<KBMongoCollection> kbMongoCollectionList = kbMongoRepoImpl.getKBMongoCollectionListByAgentIdAndCreateDateBetween(
-      "558894",
+      558894,
       "20221020"
     );
 
