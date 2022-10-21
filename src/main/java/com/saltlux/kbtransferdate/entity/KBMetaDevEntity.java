@@ -1,6 +1,7 @@
 package com.saltlux.kbtransferdate.entity;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -31,13 +32,17 @@ public class KBMetaDevEntity {
   @Id
   private String categoryCode;
 
-  private int agentId;
+  @Column(name = "agentid")
+  private Integer agentId;
 
-  private int pdfAgentid;
+  @Column(name = "pdfAgentid")
+  private Integer pdfAgentId;
 
-  private int productAgentid;
+  @Column(name = "productAgentid")
+  private Integer productAgentId;
 
-  private int cardAgentid;
+  @Column(name = "cardAgentid")
+  private Integer cardAgentId;
 
   private String siteCode;
 
@@ -55,7 +60,7 @@ public class KBMetaDevEntity {
 
   private String status;
 
-  private int isFileAgent;
+  private Integer isFileAgent;
 
   private String structureTypeCode;
 
@@ -63,19 +68,24 @@ public class KBMetaDevEntity {
 
   private String remarks;
 
-  private int errorCount;
+  private Integer errorCount;
 
   private LocalDateTime closedDatetime;
 
-  private int oldAgentid;
+  @Column(name = "oldAgentid")
+  private Integer oldAgentId;
 
-  private String dataLastObjectid;
+  @Column(name = "dataLastObjectid")
+  private String dataLastObjectId;
 
-  private String pdfLastObjectid;
+  @Column(name = "pdfLastObjectid")
+  private String pdfLastObjectId;
 
-  private String productLastObjectid;
+  @Column(name = "productLastObjectid")
+  private String productLastObjectId;
 
-  private String cardLastObjectid;
+  @Column(name = "cardLastObjectid")
+  private String cardLastObjectId;
 
-  private int isNewProductAgent;
+  private Integer isNewProductAgent;
 }
