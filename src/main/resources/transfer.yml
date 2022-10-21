@@ -1,3 +1,5 @@
 com:
   saltlux:
     kb-transfer-date:
+      output-path: /data/kb_guest/makeup/file/json/%s/%s/%s/%s/json/
+      output-file-name: '%s_%s_%s_%s_result.json'

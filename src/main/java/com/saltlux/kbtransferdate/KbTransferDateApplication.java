@@ -1,6 +1,8 @@
 package com.saltlux.kbtransferdate;
 
 import com.saltlux.kbtransferdate.enums.CommandEnum;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,6 +21,29 @@ public class KbTransferDateApplication {
 
   private static final List<String> commandNameList = CommandEnum.getCommandNameList();
   private static final List<String> commandList = CommandEnum.getCommandList();
+
+  /**
+   * 공통 변수 설정용, 여러 스레드에서 공유 가능
+   */
+  private static void setRuntimeVariables() {
+    MDC.put("THREAD_WAIT_TIME_MILI", String.valueOf(THREAD_WAIT_TIME_MILI));
+    MDC.put(
+      "OPERATE_FULLYEAR_MONTH",
+      LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMM"))
+    );
+    MDC.put(
+      "OPERATE_DATE_HOUR_MINUTE",
+      LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddHHmm"))
+    );
+    MDC.put(
+      "OPERATE_DATE_HYPHEN",
+      LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    );
+    MDC.put(
+      "OPERATE_TIME_HOUR_MINUTE_HYPHEN",
+      LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH-mm"))
+    );
+  }
 
   public static void main(String[] args) throws Exception {
     if (args.length == 0) {
@@ -50,8 +75,7 @@ public class KbTransferDateApplication {
       System.exit(0);
     }
 
-    //공통 변수 설정용, 여러 스레드에서 공유 가능
-    MDC.put("THREAD_WAIT_TIME_MILI", String.valueOf(THREAD_WAIT_TIME_MILI));
+    setRuntimeVariables();
 
     for (int i = 0; i < args.length; i++) {
       MDC.put(String.format("arg%d", i), args[i]);
