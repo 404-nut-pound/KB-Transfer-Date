@@ -23,10 +23,6 @@ public class KBMetaDevQueryRepo {
   public Optional<KBMetaDevEntity> getActivatedMetaByAgentId(
     final int agentId
   ) {
-    System.out.println(
-      "KBMetaDevQueryRepo - getActivatedMetaByAgentId - " + agentId
-    );
-
     return Optional.ofNullable(
       queryFactory
         .selectFrom(kBMetaDevEntity)
