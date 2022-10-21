@@ -43,7 +43,7 @@ public class KbTransferDateApplication {
       System.out.println(
         String.format(
           "Please insert correct commands - [%s]",
-          commandEnum.getCommandExample()
+          commandEnum.getCommandFormat()
         )
       );
 

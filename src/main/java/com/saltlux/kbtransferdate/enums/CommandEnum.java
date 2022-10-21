@@ -23,7 +23,7 @@ public enum CommandEnum {
 
   private final int minArgsLength;
 
-  private final String commandExample;
+  private final String commandFormat;
 
   private final Class<? extends Runnable> serviceClass;
 

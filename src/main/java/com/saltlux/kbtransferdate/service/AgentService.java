@@ -1,8 +1,13 @@
 package com.saltlux.kbtransferdate.service;
 
+import com.saltlux.kbtransferdate.entity.KBMetaDevEntity;
+import com.saltlux.kbtransferdate.repo.KBMetaDevQueryRepo;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +24,12 @@ public class AgentService implements Runnable {
   private String targetDate = null;
 
   private int targetAgentId = 0;
+
+  @Autowired
+  private KBMetaDevQueryRepo kbMetaDevQueryRepo;
+
+  @Autowired
+  private MongoTemplate mongoTemplate;
 
   public AgentService() {
     Object targetDate = MDC.get("arg1");
@@ -64,6 +75,16 @@ public class AgentService implements Runnable {
     }
 
     log.info("AgentService starts with [{} / {}]", targetDate, targetAgentId);
+
+    Optional<KBMetaDevEntity> optionalKBMetaDevEntity = kbMetaDevQueryRepo.getActivatedMetaByAgentId(
+      targetAgentId
+    );
+
+    if (!optionalKBMetaDevEntity.isPresent()) {
+      log.error("Cannot find metadata by agentId - {}", targetAgentId);
+    }
+
+    KBMetaDevEntity kbMetaDevEntity = optionalKBMetaDevEntity.get();
 
     log.info("AgentService ends with [{} / {}]", targetDate, targetAgentId);
   }
