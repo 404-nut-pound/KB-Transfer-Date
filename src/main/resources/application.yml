@@ -35,6 +35,8 @@ logging:
   charset:
     console: UTF-8
     file: UTF-8
+  file:
+    name: ./logs/kb-tranfer-date/kb-transfer-date.log
   logback:
     rollingpolicy:
       max-history: 30

@@ -14,23 +14,21 @@
     </encoder>
   </appender>
 
-  <springProfile name="!(default | test)">
-    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-      <file>${LOG_FILE}</file>
-      <encoder>
-        <pattern>${FILE_LOG_PATTERN}
+  <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_FILE}</file>
+    <encoder>
+      <pattern>${FILE_LOG_PATTERN}
       </pattern>
-      </encoder>
-      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-        <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
-        <!-- <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+      <!-- <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
         <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
           <maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE}</maxFileSize>
         </timeBasedFileNamingAndTriggeringPolicy> -->
-        <maxHistory>${LOGBACK_ROLLINGPOLICY_MAX_HISTORY}</maxHistory>
-      </rollingPolicy>
-    </appender>
-  </springProfile>
+      <maxHistory>${LOGBACK_ROLLINGPOLICY_MAX_HISTORY}</maxHistory>
+    </rollingPolicy>
+  </appender>
 
   <logger name="org.springframework" level="info" />
   <logger name="org.springframework.core" level="info" />
@@ -45,9 +43,7 @@
 
   <root level="${logging.level.root}">
     <appender-ref ref="console" />
-    <springProfile name="!(default | test)">
-      <appender-ref ref="file" />
-    </springProfile>
+    <appender-ref ref="file" />
   </root>
 
 </configuration>
