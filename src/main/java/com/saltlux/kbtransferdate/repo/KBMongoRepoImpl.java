@@ -1,9 +1,21 @@
 package com.saltlux.kbtransferdate.repo;
 
 import com.saltlux.kbtransferdate.entity.KBMongoCollection;
+import com.saltlux.kbtransferdate.util.AppUtil;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.stereotype.Component;
 
-public abstract class KBMongoRepoImpl implements KBMongoRepo {
+@Component
+@RequiredArgsConstructor
+public class KBMongoRepoImpl {
+
+  private final MongoTemplate mongoTemplate;
 
   /**
    * AgentId와 날짜 문자열(yyyyMMdd)를 기준으로 MongoDB Collection 조회
@@ -18,6 +30,21 @@ public abstract class KBMongoRepoImpl implements KBMongoRepo {
     final String agentId,
     final String date
   ) {
-    return null;
+    LocalDate fromDate = LocalDate.parse(
+      date,
+      DateTimeFormatter.ofPattern("yyyyMMdd")
+    );
+    LocalDate toDate = fromDate.plusDays(1);
+
+    BasicQuery basicQuery = new BasicQuery(
+      String.format(
+        "{'agentid': %s, _id: {$gt: ObjectId(\"%s\"), $lt: ObjectId(\"%s\")}}",
+        agentId,
+        new ObjectId(AppUtil.getDateFromLocalDate(fromDate)),
+        new ObjectId(AppUtil.getDateFromLocalDate(toDate))
+      )
+    );
+
+    return mongoTemplate.find(basicQuery, KBMongoCollection.class);
   }
 }

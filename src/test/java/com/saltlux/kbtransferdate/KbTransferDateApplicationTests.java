@@ -3,16 +3,12 @@ package com.saltlux.kbtransferdate;
 import com.saltlux.kbtransferdate.entity.KBMetaDevEntity;
 import com.saltlux.kbtransferdate.entity.KBMongoCollection;
 import com.saltlux.kbtransferdate.repo.KBMetaDevQueryRepo;
-import com.saltlux.kbtransferdate.repo.KBMongoRepo;
-import com.saltlux.kbtransferdate.util.AppUtil;
+import com.saltlux.kbtransferdate.repo.KBMongoRepoImpl;
 import java.util.List;
 import java.util.Optional;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 
 @SpringBootTest
 class KbTransferDateApplicationTests {
@@ -20,11 +16,8 @@ class KbTransferDateApplicationTests {
   @Autowired
   private KBMetaDevQueryRepo kbMetaDevQueryRepo;
 
-  @Autowired
-  private MongoTemplate mongoTemplate;
-
-  @Autowired
-  private KBMongoRepo kbMongoRepo;
+  @Autowired(required = true)
+  private KBMongoRepoImpl kbMongoRepoImpl;
 
   @Test
   void getActivatedMetaByAgentIdTest() {
@@ -46,40 +39,49 @@ class KbTransferDateApplicationTests {
 
   @Test
   void findMongoCollectionByAgentId() {
+    // ObjectId fromId = new ObjectId(AppUtil.getDateFromDateString("20221020"));
+    // ObjectId toId = new ObjectId(AppUtil.getDateFromDateString("20221021"));
+
+    //using jpa - failed
+    // List<KBMongoCollection> kbMongoCollectionList = kbMongoRepo.findByAgentIdAndIdGtAndIdLt(
+    //   "558894",
+    //   fromId,
+    //   toId
+    // );
+
+    //using Query Criteria - failed
     // Query query = new Query(
     //   Criteria
     //     .where("agentid")
     //     .is(558894)
     //     .and("_id")
-    //     .gt(new ObjectId(AppUtil.getDateFromDateString("20221020")))
+    //     .gt(fromId)
     // );
     // query.addCriteria(
     //   Criteria
     //     .where("_id")
-    //     .lt(new ObjectId(AppUtil.getDateFromDateString("20221021")))
+    //     .lt(toId)
     // )
-    ObjectId fromId = new ObjectId(AppUtil.getDateFromDateString("20221020"));
-    ObjectId toId = new ObjectId(AppUtil.getDateFromDateString("20221021"));
 
-    BasicQuery basicQuery = new BasicQuery(
-      String.format(
-        "{'agentid': %s, _id: {$gt: ObjectId(\"%s\"), $lt: ObjectId(\"%s\")}}",
-        "558894",
-        fromId.toString(),
-        toId.toString()
-      )
-    );
-
-    List<KBMongoCollection> kbMongoCollectionList = mongoTemplate.find(
-      basicQuery,
-      KBMongoCollection.class
-    );
-
-    // List<KBMongoCollection> kbMongoCollectionList = kbMongoRepo.findByAgentIdAndIdGtAndIdLt(
-    //   "558894",
-    //   new ObjectId(AppUtil.getDateFromDateString("20221020")),
-    //   new ObjectId(AppUtil.getDateFromDateString("20221021"))
+    //using BasicQuery Criteria - successed
+    // BasicQuery basicQuery = new BasicQuery(
+    //   String.format(
+    //     "{'agentid': %s, _id: {$gt: ObjectId(\"%s\"), $lt: ObjectId(\"%s\")}}",
+    //     "558894",
+    //     fromId.toString(),
+    //     toId.toString()
+    //   )
     // );
+    //
+    // List<KBMongoCollection> kbMongoCollectionList = mongoTemplate.find(
+    //   basicQuery,
+    //   KBMongoCollection.class
+    // );
+
+    List<KBMongoCollection> kbMongoCollectionList = kbMongoRepoImpl.getKBMongoCollectionListByAgentIdAndCreateDateBetween(
+      "558894",
+      "20221020"
+    );
 
     System.out.println(
       "kbMongoCollectionList size - " + kbMongoCollectionList.size()

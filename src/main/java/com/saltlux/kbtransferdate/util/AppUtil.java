@@ -21,4 +21,15 @@ public class AppUtil {
         .toInstant()
     );
   }
+
+  /**
+   * LocalDate 객체를 Date 객체로 변환
+   * @param localDate
+   * @return
+   */
+  public static Date getDateFromLocalDate(final LocalDate localDate) {
+    return getDateFromDateString(
+      localDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+    );
+  }
 }
