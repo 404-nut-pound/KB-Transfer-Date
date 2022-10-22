@@ -94,8 +94,9 @@ public class DateWorker implements Runnable {
 
         if (kbMongoCollectionList.size() == 0) {
           log.error(
-            "Cannot find crawl data by AgentId - {}",
-            kbMetaDevEntity.getAgentId()
+            "Cannot find crawled data AgentId - {} / Target Date - {}",
+            kbMetaDevEntity.getAgentId(),
+            targetDate
           );
 
           return;
