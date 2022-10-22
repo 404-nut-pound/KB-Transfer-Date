@@ -135,6 +135,8 @@ public class DateService implements Runnable {
           //worker 클래스가 종료될 때까지 대기
         }
       } else {
+        log.info("Target AgentId - {}", targetAgentId);
+
         //특정 AgentId를 대상으로 동작
         Optional<KBMetaDevEntity> optionalKBMetaDevEntity = kbMetaDevQueryRepo.getActivatedMetaByAgentId(
           targetAgentId
