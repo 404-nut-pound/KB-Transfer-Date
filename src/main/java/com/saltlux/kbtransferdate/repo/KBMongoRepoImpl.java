@@ -38,7 +38,7 @@ public class KBMongoRepoImpl {
 
     BasicQuery basicQuery = new BasicQuery(
       String.format(
-        "{'agentid': %d, _id: {$gt: ObjectId(\"%s\"), $lt: ObjectId(\"%s\")}}",
+        "{'agentid': %d, _id: {$gte: ObjectId(\"%s\"), $lt: ObjectId(\"%s\")}}",
         agentId,
         new ObjectId(AppUtil.getDateFromLocalDate(fromDate)),
         new ObjectId(AppUtil.getDateFromLocalDate(toDate))
