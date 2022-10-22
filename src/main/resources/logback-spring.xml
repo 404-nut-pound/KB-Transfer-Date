@@ -40,6 +40,7 @@
   <logger name="org.hibernate" level="info" />
   <logger name="web" level="info" />
   <logger name="sql" level="info" />
+  <logger name="org.mongodb.driver" level="error" />
 
   <root level="${logging.level.root}">
     <appender-ref ref="console" />
