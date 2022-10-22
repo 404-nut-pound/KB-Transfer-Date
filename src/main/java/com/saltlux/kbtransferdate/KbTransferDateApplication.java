@@ -20,6 +20,7 @@ public class KbTransferDateApplication {
 
   /**
    * 공통 변수 설정용, 여러 스레드에서 공유 가능
+   * 단, 신규 스레드(runnable run, callable call, new Class() 등)에서는 사용 불가
    */
   private static void setRuntimeVariables() {
     MDC.put("THREAD_WAIT_TIME_MILI", String.valueOf(THREAD_WAIT_TIME_MILI));
