@@ -50,7 +50,7 @@ public class AppUtil {
    * @throws IOException
    */
   public static <T> List<List<T>> getBlockedList(List<T> t) {
-    List<List<T>> blockedPathList = new ArrayList<>();
+    List<List<T>> blockedPathList = new ArrayList<>(AVAILABLE_PROCESSORS);
 
     try {
       int blockSize = 0, blockIndex = 0, repeatLimit = AVAILABLE_PROCESSORS >
