@@ -24,19 +24,19 @@ public class KbTransferDateApplication {
   private static void setRuntimeVariables() {
     MDC.put("THREAD_WAIT_TIME_MILI", String.valueOf(THREAD_WAIT_TIME_MILI));
     MDC.put(
-      "OPERATE_FULLYEAR_MONTH",
+      "OPERATE_yyyyMM",
       LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMM"))
     );
     MDC.put(
-      "OPERATE_DATE_HOUR_MINUTE",
+      "OPERATE_ddHHmm",
       LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddHHmm"))
     );
     MDC.put(
-      "OPERATE_DATE_HYPHEN",
+      "OPERATE_yyyy-MM-dd",
       LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     );
     MDC.put(
-      "OPERATE_TIME_HOUR_MINUTE_HYPHEN",
+      "OPERATE_HH-mm",
       LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH-mm"))
     );
   }

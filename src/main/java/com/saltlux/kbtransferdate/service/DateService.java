@@ -41,16 +41,10 @@ public class DateService implements Runnable {
   private final long threadWaitTimeMili = Long.parseLong(
     MDC.get("THREAD_WAIT_TIME_MILI").toString()
   );
-  private String operateFullYearMonth = MDC
-    .get("OPERATE_FULLYEAR_MONTH")
-    .toString();
-  private String operateDateHourMinute = MDC
-    .get("OPERATE_DATE_HOUR_MINUTE")
-    .toString();
-  private String operateDateHyphen = MDC.get("OPERATE_DATE_HYPHEN").toString();
-  private String operateTimeHyphen = MDC
-    .get("OPERATE_TIME_HOUR_MINUTE_HYPHEN")
-    .toString();
+  private String operateFullYearMonth = MDC.get("OPERATE_yyyyMM").toString();
+  private String operateDateHourMinute = MDC.get("OPERATE_ddHHmm").toString();
+  private String operateDateHyphen = MDC.get("OPERATE_yyyy-MM-dd").toString();
+  private String operateTimeHyphen = MDC.get("OPERATE_HH-mm").toString();
 
   @Autowired
   private KBMetaDevQueryRepo kbMetaDevQueryRepo;
