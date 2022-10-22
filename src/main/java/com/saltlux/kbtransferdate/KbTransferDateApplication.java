@@ -1,9 +1,8 @@
 package com.saltlux.kbtransferdate;
 
-import com.saltlux.kbtransferdate.enums.CommandEnum;
+import com.saltlux.kbtransferdate.service.DateService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -18,9 +17,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class KbTransferDateApplication {
 
   private static final long THREAD_WAIT_TIME_MILI = 5 * 1000;
-
-  private static final List<String> commandNameList = CommandEnum.getCommandNameList();
-  private static final List<String> commandList = CommandEnum.getCommandList();
 
   /**
    * 공통 변수 설정용, 여러 스레드에서 공유 가능
@@ -47,30 +43,7 @@ public class KbTransferDateApplication {
 
   public static void main(String[] args) throws Exception {
     if (args.length == 0) {
-      System.out.println(
-        String.format("Please insert command - %s", commandList)
-      );
-
-      System.exit(0);
-    }
-
-    if (!commandNameList.contains(args[0].toUpperCase())) {
-      System.out.println(
-        String.format("Please check command list. - %s", commandList)
-      );
-
-      System.exit(0);
-    }
-
-    CommandEnum commandEnum = CommandEnum.valueOf(args[0].toUpperCase());
-
-    if (args.length < commandEnum.getMinArgsLength()) {
-      System.out.println(
-        String.format(
-          "Please insert correct commands - [%s]",
-          commandEnum.getCommandFormat()
-        )
-      );
+      System.out.println("Please transfer target date(yyyyMMdd)");
 
       System.exit(0);
     }
@@ -83,7 +56,10 @@ public class KbTransferDateApplication {
 
     long startTime = System.currentTimeMillis();
 
-    log.info("========== Start nia_corpus_tools for '{}' ==========", args[0]);
+    log.info(
+      "========== Start KB Transfer by Date for '{}' ==========",
+      args[0]
+    );
 
     //spring context 실행
     ConfigurableApplicationContext context = SpringApplication.run(
@@ -94,8 +70,8 @@ public class KbTransferDateApplication {
     //thread 관리자 생성
     ExecutorService executorService = Executors.newCachedThreadPool();
 
-    //CommandEnum에 할당된 sercice 클래스 실행
-    executorService.submit(context.getBean(commandEnum.getServiceClass()));
+    //sercice 클래스 실행
+    executorService.submit(context.getBean(DateService.class));
 
     executorService.shutdown();
 
