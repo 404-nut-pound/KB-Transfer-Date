@@ -44,7 +44,9 @@ public class KbTransferDateApplication {
 
   public static void main(String[] args) throws Exception {
     if (args.length == 0) {
-      System.out.println("Please transfer target date(yyyyMMdd)");
+      System.out.println(
+        "Please insert 'target date'(yyyyMMdd) ['agentId'(6 number)]"
+      );
 
       System.exit(0);
     }
