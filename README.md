@@ -25,11 +25,18 @@
 
 ## 빌드 방법
 
-- 아래 명령어 실행 후 `프로젝트 디렉토리/build/libs/kb-transfer-date-0.0.1.jar` 확인
+- 아래 명령어 실행 후 `프로젝트 디렉토리/build/libs/kb-transfer-date-SNAPSHOT.jar` 확인
 
   ```sh
   chmod u+x gradlew
-  ./gradlew bootJar
+  ./gradlew bootJar # 기본 버전 'SNAPSHOT'
+  ```
+
+- 버전을 입력하려면 다음 명렁어 추가 후 `프로젝트 디렉토리/build/libs/kb-transfer-date-'버전 값'.jar` 확인
+
+  ```sh
+  chmod u+x gradlew
+  ./gradlew bootJar -Pversion="버전 값"
   ```
 
 ## 실행 방법

@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.saltlux"
-version = (findProperty("version") == "unspecified") ? "0.0.1" : version
+version = (findProperty("version") == "unspecified") ? "SNAPSHOT" : version
 sourceCompatibility = "8"
 
 configurations {
