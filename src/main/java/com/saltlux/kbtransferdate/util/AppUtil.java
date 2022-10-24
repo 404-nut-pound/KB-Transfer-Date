@@ -45,26 +45,26 @@ public class AppUtil {
   /**
    * 프로세서(스레드) 기준으로 List를 분할
    *
-   * @param <T>
+   * @param typedList
    * @return
    * @throws IOException
    */
-  public static <T> List<List<T>> getBlockedList(List<T> t) {
-    List<List<T>> blockedPathList = new ArrayList<>(AVAILABLE_PROCESSORS);
+  public static <T> List<List<T>> getBlockedList(List<T> typedList) {
+    List<List<T>> blockedList = new ArrayList<>(AVAILABLE_PROCESSORS);
 
     try {
       int blockSize = 0, blockIndex = 0, repeatLimit = AVAILABLE_PROCESSORS >
-        t.size()
-        ? t.size()
+        typedList.size()
+        ? typedList.size()
         : AVAILABLE_PROCESSORS;
 
       //프로세서 수 보다 파일 개수가 적을 때 blockSize 는 ceil 처리로 무조건 1 이상이기 때문에 index 오류 발생
       //분모를 파일 개수로 설정
-      blockSize = (int) Math.ceil((double) t.size() / repeatLimit);
+      blockSize = (int) Math.ceil((double) typedList.size() / repeatLimit);
 
       log.info(
         "target list size - {} / repeat limit - {} / block size - {}",
-        t.size(),
+        typedList.size(),
         repeatLimit,
         blockSize
       );
@@ -72,21 +72,26 @@ public class AppUtil {
       for (
         blockIndex = 0;
         blockIndex < repeatLimit - 1 &&
-        ((blockIndex + 1) * blockSize) < t.size();
+        ((blockIndex + 1) * blockSize) < typedList.size();
         blockIndex++
       ) {
         //반복문으로 각 blockSize만큼 subList하여 추가
-        blockedPathList.add(
-          t.subList(blockIndex * blockSize, (blockIndex + 1) * blockSize)
+        blockedList.add(
+          typedList.subList(
+            blockIndex * blockSize,
+            (blockIndex + 1) * blockSize
+          )
         );
       }
 
       //반복문 종료 후 남은 요소를 추가
-      blockedPathList.add(t.subList(blockIndex * blockSize, t.size()));
+      blockedList.add(
+        typedList.subList(blockIndex * blockSize, typedList.size())
+      );
     } catch (Exception e) {
       log.error(e.getMessage(), e);
     }
 
-    return blockedPathList;
+    return blockedList;
   }
 }
