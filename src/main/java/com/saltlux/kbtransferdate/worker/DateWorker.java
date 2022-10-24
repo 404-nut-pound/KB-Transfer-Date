@@ -81,22 +81,22 @@ public class DateWorker implements Runnable {
     }
 
     log.info(
-      "DateWorker starts with list with {} size.",
+      "DateWorker starts with list size - {}",
       kbMetaDevEntityList.size()
     );
 
     try {
       for (KBMetaDevEntity kbMetaDevEntity : kbMetaDevEntityList) {
         List<KBMongoCollection> kbMongoCollectionList = kbMongoRepoImpl.getKBMongoCollectionListByAgentIdAndCreateDateBetween(
-          kbMetaDevEntity.getAgentId(),
-          targetDate
+          targetDate,
+          kbMetaDevEntity.getAgentId()
         );
 
         if (kbMongoCollectionList.size() == 0) {
           log.error(
-            "Cannot find crawled data AgentId - {} / Target Date - {}",
-            kbMetaDevEntity.getAgentId(),
-            targetDate
+            "Cannot find crawled data Target Date - {} / AgentId - {}",
+            targetDate,
+            kbMetaDevEntity.getAgentId()
           );
 
           return;
@@ -189,9 +189,6 @@ public class DateWorker implements Runnable {
       log.error(e.getMessage(), e);
     }
 
-    log.info(
-      "DateWorker ends with list with {} size.",
-      kbMetaDevEntityList.size()
-    );
+    log.info("DateWorker ends with list size - {}", kbMetaDevEntityList.size());
   }
 }

@@ -27,8 +27,8 @@ public class KBMongoRepoImpl {
    * @return
    */
   public List<KBMongoCollection> getKBMongoCollectionListByAgentIdAndCreateDateBetween(
-    final int agentId,
-    final String date
+    final String date,
+    final int agentId
   ) {
     LocalDate fromDate = LocalDate.parse(
       date,

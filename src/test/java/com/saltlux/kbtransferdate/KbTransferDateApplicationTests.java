@@ -79,8 +79,8 @@ class KbTransferDateApplicationTests {
     // );
 
     List<KBMongoCollection> kbMongoCollectionList = kbMongoRepoImpl.getKBMongoCollectionListByAgentIdAndCreateDateBetween(
-      558894,
-      "20221020"
+      "20221020",
+      558894
     );
 
     System.out.println(
