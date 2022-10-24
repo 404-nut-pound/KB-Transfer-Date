@@ -177,7 +177,7 @@ public class DateWorker implements Runnable {
           );
         } catch (IOException ioe) {
           log.error(
-            "Error with write file - AgentId - {} / SiteCode - {} / CategoryCode - {}\n{}",
+            "Error with write file - AgentId - {} / SiteCode - {} / CategoryCode - {}",
             kbMetaDevEntity.getAgentId(),
             kbMetaDevEntity.getSiteCode(),
             kbMetaDevEntity.getCategoryCode()
