@@ -42,6 +42,7 @@ public class KBMetaDevQueryRepo {
     return queryFactory
       .selectFrom(kBMetaDevEntity)
       .where(kBMetaDevEntity.status.eq("1"))
+      .orderBy(kBMetaDevEntity.categoryCode.asc())
       .fetch();
   }
 }
