@@ -134,9 +134,10 @@ public class DateWorker
               .siteCode(kbMetaDevEntity.getSiteCode())
               .categoryCode(kbMetaDevEntity.getCategoryCode())
               .summary(kbMongoCollection.getSummary())
-              .crwalDate(kbMongoCollection.getCreateDate())
+              .crawlDate(kbMongoCollection.getCreateDate())
               .prCode(kbMongoCollection.getPrCode())
               .url(kbMongoCollection.getUrl())
+              .valueTable(kbMongoCollection.getValueTable())
               ._id(
                 String.format("%s_000", kbMongoCollection.get_id().toString())
               )
