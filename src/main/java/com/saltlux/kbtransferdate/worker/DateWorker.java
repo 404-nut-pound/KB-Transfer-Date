@@ -104,7 +104,7 @@ public class DateWorker implements Runnable {
             kbMetaDevEntity.toString()
           );
 
-          return;
+          continue;
         }
 
         log.info(
