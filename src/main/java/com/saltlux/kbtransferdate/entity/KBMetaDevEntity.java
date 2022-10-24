@@ -12,7 +12,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -26,7 +25,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(callSuper = false)
-@ToString(callSuper = false)
 public class KBMetaDevEntity {
 
   @Id
@@ -88,4 +86,13 @@ public class KBMetaDevEntity {
   private String cardLastObjectId;
 
   private Boolean isNewProductAgent;
+
+  public String toString() {
+    return String.format(
+      "AgentId - %d / SiteCode - %s / CategoryCode - %s",
+      this.agentId,
+      this.siteCode,
+      this.categoryCode
+    );
+  }
 }

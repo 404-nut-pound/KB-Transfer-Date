@@ -4,13 +4,11 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
 @Builder
 @EqualsAndHashCode
-@ToString
 public class KBTransferOutputDto {
 
   private String productName;
@@ -34,4 +32,12 @@ public class KBTransferOutputDto {
   private String keyPath;
 
   private String value;
+
+  public String toString() {
+    return String.format(
+      "SiteCode - %s / CategoryCode - %s",
+      this.siteCode,
+      this.categoryCode
+    );
+  }
 }
