@@ -1,5 +1,11 @@
 com:
   saltlux:
     kb-transfer-date:
-      output-path: /data/kb_guest/makeup/file/json/%s/%s/%s/%s/json/
-      output-file-name: '%s_%s_%s_%s_result.json'
+      # /data/kb_guest/makeup/file/json/yyyyMM/ddHHmm/siteCode/categoryCode/json/
+      result-output-path: /data/kb_guest/makeup/file/json/%s/%s/%s/%s/json/
+      # yyyy-MM-dd_HH-mm_siteCode_categoryCode_result.json
+      result-output-file-name: '%s_%s_%s_%s_result.json'
+      # /data/kb_guest/makeup/file/json/yyyyMM/ddHHmm/siteCode/
+      product-output-path: /data/kb_guest/makeup/file/json/%s/%s/%s/
+      # yyyy-MM-dd_HH-mm_siteCode_productList.json
+      product-output-file-name: '%s_%s_%s_productList.json'

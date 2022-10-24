@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @EqualsAndHashCode
-public class KBTransferOutputDto {
+public class KBTransferResultOutputDto {
 
   private String productName;
 
