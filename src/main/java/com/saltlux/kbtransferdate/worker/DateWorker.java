@@ -37,6 +37,12 @@ public class DateWorker implements Runnable {
 
   @Override
   public void run() {
+    if (targetDate == null) {
+      log.error("targetDate is null!");
+
+      return;
+    }
+
     if (outputPath == null) {
       log.error("outputPath is null!");
 
@@ -93,22 +99,18 @@ public class DateWorker implements Runnable {
 
         if (kbMongoCollectionList.size() == 0) {
           log.error(
-            "Cannot find crawled data Target Date - {} / AgentId - {} / SiteCode - {} / CategoryCode - {}",
+            "Cannot find crawled data Target Date - {} / {}",
             targetDate,
-            kbMetaDevEntity.getAgentId(),
-            kbMetaDevEntity.getSiteCode(),
-            kbMetaDevEntity.getCategoryCode()
+            kbMetaDevEntity.toString()
           );
 
           return;
         }
 
         log.info(
-          "Target Date - {} / AgentId - {} / SiteCode - {} / CategoryCode - {} / Crawled Data size - {}",
+          "Target Date - {} / {} / Crawled Data size - {}",
           targetDate,
-          kbMetaDevEntity.getAgentId(),
-          kbMetaDevEntity.getSiteCode(),
-          kbMetaDevEntity.getCategoryCode(),
+          kbMetaDevEntity.toString(),
           kbMongoCollectionList.size()
         );
 
@@ -181,11 +183,9 @@ public class DateWorker implements Runnable {
           );
         } catch (IOException ioe) {
           log.error(
-            "Error with write file - Target Date - {} / AgentId - {} / SiteCode - {} / CategoryCode - {}",
+            "Error with write file - Target Date - {} / {}",
             targetDate,
-            kbMetaDevEntity.getAgentId(),
-            kbMetaDevEntity.getSiteCode(),
-            kbMetaDevEntity.getCategoryCode()
+            kbMetaDevEntity.toString()
           );
           log.error(ioe.getMessage(), ioe);
         }
