@@ -28,9 +28,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class DateService implements Runnable {
 
-  private String targetDate = null;
+  private Object targetDate = MDC.get("arg0");
 
-  private Integer targetAgentId = null;
+  private Object targetAgentId = MDC.get("arg1");
 
   @Value("${com.saltlux.kb-transfer-date.output-path}")
   private String outputPath;
@@ -52,8 +52,10 @@ public class DateService implements Runnable {
   @Autowired
   private KBMongoRepoImpl kbMongoRepoImpl;
 
-  public DateService() {
-    Object targetDate = MDC.get("arg0");
+  @Override
+  public void run() {
+    String targetDateStr = null;
+    Integer targetAgentIdInt = 0;
 
     if (
       targetDate != null &&
@@ -62,37 +64,28 @@ public class DateService implements Runnable {
         .matcher(targetDate.toString())
         .matches()
     ) {
-      this.targetDate = targetDate.toString();
+      targetDateStr = targetDate.toString();
     } else {
-      log.info(
+      log.error(
         "Target Date is null or not formatted with LocalDate(yyyyMMdd)."
       );
-    }
 
-    Object targetAgentId = MDC.get("arg1");
+      return;
+    }
 
     if (
       targetAgentId != null &&
       Pattern.compile("\\d{6}").matcher(targetAgentId.toString()).matches()
     ) {
-      this.targetAgentId = Integer.parseInt(targetAgentId.toString());
+      targetAgentIdInt = Integer.parseInt(targetAgentId.toString());
     } else {
       log.info("Target AgentId is null or not number.");
     }
-  }
 
-  @Override
-  public void run() {
-    if (targetDate == null) {
-      log.error("Target Date is null!");
-
-      return;
-    }
-
-    log.info("DateService starts with [{}]", targetDate);
+    log.info("DateService starts with [{}]", targetDateStr);
 
     try {
-      if (targetAgentId == null) {
+      if (targetAgentIdInt == 0) {
         //전체 AgentId를 대상으로 동작
         List<KBMetaDevEntity> kbMetaDevEntityList = kbMetaDevQueryRepo.getActivatedMetaListAll();
 
@@ -111,7 +104,7 @@ public class DateService implements Runnable {
           executorService.submit(
             DateWorker
               .builder()
-              .targetDate(targetDate)
+              .targetDate(targetDateStr)
               .outputPath(outputPath)
               .outputFileName(outputFileName)
               .operateFullYearMonth(operateFullYearMonth)
@@ -135,15 +128,15 @@ public class DateService implements Runnable {
           //worker 클래스가 종료될 때까지 대기
         }
       } else {
-        log.info("Target AgentId - {}", targetAgentId);
+        log.info("Target AgentId - {}", targetAgentIdInt);
 
         //특정 AgentId를 대상으로 동작
         Optional<KBMetaDevEntity> optionalKBMetaDevEntity = kbMetaDevQueryRepo.getActivatedMetaByAgentId(
-          targetAgentId
+          targetAgentIdInt
         );
 
         if (!optionalKBMetaDevEntity.isPresent()) {
-          log.error("Cannot find metadata by AgentId - {}", targetAgentId);
+          log.error("Cannot find metadata by AgentId - {}", targetAgentIdInt);
 
           return;
         }
@@ -153,7 +146,7 @@ public class DateService implements Runnable {
         //단일 대상이므로 Thread 처리하지 않고 직업 호출
         DateWorker
           .builder()
-          .targetDate(targetDate)
+          .targetDate(targetDateStr)
           .outputPath(outputPath)
           .outputFileName(outputFileName)
           .operateFullYearMonth(operateFullYearMonth)
