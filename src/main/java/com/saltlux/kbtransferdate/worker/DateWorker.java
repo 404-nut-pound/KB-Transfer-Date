@@ -164,13 +164,13 @@ public class DateWorker implements Runnable {
         );
 
         try {
+          if (!Files.isDirectory(Paths.get(formattedOutputPath))) {
+            Files.createDirectories(Paths.get(formattedOutputPath));
+          }
+
           Path path = Paths.get(
             String.format("%s/%s", formattedOutputPath, formattedOutputFileName)
           );
-
-          if (!Files.isDirectory(path)) {
-            Files.createDirectories(path);
-          }
 
           Files.deleteIfExists(path);
           Files.write(
