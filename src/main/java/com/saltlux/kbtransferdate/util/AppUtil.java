@@ -63,7 +63,7 @@ public class AppUtil {
       blockSize = (int) Math.ceil((double) t.size() / repeatLimit);
 
       log.info(
-        "target files - {} / repeat limit - {} / block size - {}",
+        "target list size - {} / repeat limit - {} / block size - {}",
         t.size(),
         repeatLimit,
         blockSize

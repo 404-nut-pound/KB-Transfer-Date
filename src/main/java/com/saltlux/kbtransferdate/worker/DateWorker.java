@@ -93,16 +93,22 @@ public class DateWorker implements Runnable {
 
         if (kbMongoCollectionList.size() == 0) {
           log.error(
-            "Cannot find crawled data Target Date - {} / AgentId - {}",
+            "Cannot find crawled data Target Date - {} / AgentId - {} / SiteCode - {} / CategoryCode - {}",
             targetDate,
-            kbMetaDevEntity.getAgentId()
+            kbMetaDevEntity.getAgentId(),
+            kbMetaDevEntity.getSiteCode(),
+            kbMetaDevEntity.getCategoryCode()
           );
 
           return;
         }
 
         log.info(
-          "kbMongoCollectionList size - {}",
+          "Target Date - {} / AgentId - {} / SiteCode - {} / CategoryCode - {} / Crawled Data size - {}",
+          targetDate,
+          kbMetaDevEntity.getAgentId(),
+          kbMetaDevEntity.getSiteCode(),
+          kbMetaDevEntity.getCategoryCode(),
           kbMongoCollectionList.size()
         );
 
@@ -175,7 +181,8 @@ public class DateWorker implements Runnable {
           );
         } catch (IOException ioe) {
           log.error(
-            "Error with write file - AgentId - {} / SiteCode - {} / CategoryCode - {}",
+            "Error with write file - Target Date - {} / AgentId - {} / SiteCode - {} / CategoryCode - {}",
+            targetDate,
             kbMetaDevEntity.getAgentId(),
             kbMetaDevEntity.getSiteCode(),
             kbMetaDevEntity.getCategoryCode()
