@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
@@ -172,8 +171,7 @@ public class DateWorker implements Runnable {
             path,
             jsonMapper
               .writerWithDefaultPrettyPrinter()
-              .writeValueAsBytes(kbTransferOutputDtoList),
-            StandardOpenOption.CREATE
+              .writeValueAsBytes(kbTransferOutputDtoList)
           );
         } catch (IOException ioe) {
           log.error(
