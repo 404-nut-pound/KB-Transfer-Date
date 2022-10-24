@@ -99,7 +99,7 @@ public class DateWorker implements Runnable {
 
         if (kbMongoCollectionList.size() == 0) {
           log.error(
-            "Cannot find crawled data Target Date - {} / {}",
+            "Cannot find crawled data. Target Date - {} / {}",
             targetDate,
             kbMetaDevEntity.toString()
           );
@@ -181,7 +181,7 @@ public class DateWorker implements Runnable {
           );
         } catch (IOException ioe) {
           log.error(
-            "Error with write file - Target Date - {} / {}",
+            "Error with write file. Target Date - {} / {}",
             targetDate,
             kbMetaDevEntity.toString()
           );

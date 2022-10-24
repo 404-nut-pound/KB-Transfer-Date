@@ -82,7 +82,7 @@ public class DateService implements Runnable {
       log.info("Target AgentId is null or not number.");
     }
 
-    log.info("DateService starts with [{}]", targetDateStr);
+    log.info("DateService starts with {}", targetDateStr);
 
     try {
       if (targetAgentIdInt == 0) {
@@ -160,6 +160,6 @@ public class DateService implements Runnable {
       log.error(e.getMessage(), e);
     }
 
-    log.info("DateService ends with [{}]", targetDate);
+    log.info("DateService ends with {}", targetDate);
   }
 }
