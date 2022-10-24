@@ -95,9 +95,7 @@ public class DateService implements Runnable {
         );
 
         //thread 관리자 생성
-        ExecutorService executorService = Executors.newFixedThreadPool(
-          blockedKBMetaDevEntityList.size()
-        );
+        ExecutorService executorService = Executors.newCachedThreadPool();
 
         //실행 환경의 thread 수 만큼 worker 실행
         for (List<KBMetaDevEntity> kbMetaDevEntitiyList : blockedKBMetaDevEntityList) {

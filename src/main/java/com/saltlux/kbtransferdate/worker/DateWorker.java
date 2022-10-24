@@ -114,9 +114,7 @@ public class DateWorker implements Runnable {
           kbMongoCollectionList.size()
         );
 
-        ArrayList<KBTransferOutputDto> kbTransferOutputDtoList = new ArrayList<KBTransferOutputDto>(
-          kbMongoCollectionList.size()
-        );
+        List<KBTransferOutputDto> kbTransferOutputDtoList = new ArrayList<KBTransferOutputDto>();
 
         for (KBMongoCollection kbMongoCollection : kbMongoCollectionList) {
           kbTransferOutputDtoList.add(
