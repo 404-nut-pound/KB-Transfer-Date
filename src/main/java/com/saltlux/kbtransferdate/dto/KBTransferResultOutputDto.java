@@ -1,5 +1,7 @@
 package com.saltlux.kbtransferdate.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,6 +11,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @EqualsAndHashCode
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class KBTransferResultOutputDto {
 
   private String productName;
