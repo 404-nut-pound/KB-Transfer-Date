@@ -154,7 +154,7 @@ public class DateWorker implements Runnable {
           kbMetaDevEntity.getCategoryCode()
         );
 
-        //포맷 - yyyy-MM-dd_HHmm_siteCode_categoryCode_result.json
+        //포맷 - yyyy-MM-dd_HH-mm_siteCode_categoryCode_result.json
         //예시 - 2022-10-21_00-05_002_C10227_result.json
         //이 때, 날짜와 시간은 프로그램 실행 시점의 값이 입력 됨
         final String formattedOutputFileName = String.format(
