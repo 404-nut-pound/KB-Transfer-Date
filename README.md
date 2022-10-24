@@ -61,6 +61,7 @@
   - [Inflearn Q&A](https://www.inflearn.com/questions/35226)
 - 혹은 다음과 같이 조치
 
+  - VSCode 설정 - java.import.generatesMetadataFilesAtProjectRoot 검색 - 검색 결과 체크
   - VSCode 설정 - file exclude 검색 - 패턴 중 `\*\*/.classpath` 삭제
   - 프로젝트 디렉토리에 나타난 `.classpath` 파일 중 다음 내용 수정 후 저장
 
