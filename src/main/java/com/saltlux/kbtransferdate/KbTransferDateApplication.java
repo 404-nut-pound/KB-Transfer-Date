@@ -4,9 +4,6 @@ import com.saltlux.kbtransferdate.service.DateService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.boot.SpringApplication;
@@ -80,27 +77,8 @@ public class KbTransferDateApplication {
       args
     );
 
-    //thread 관리자 생성
-    ExecutorService executorService = Executors.newCachedThreadPool();
-
-    //sercice 클래스 실행
-    executorService.submit(context.getBean(DateService.class));
-
-    executorService.shutdown();
-
-    //service 클래스가 종료될 때까지 대기
-    while (
-      !executorService.awaitTermination(
-        THREAD_WAIT_TIME_MILI,
-        TimeUnit.MILLISECONDS
-      )
-    ) {
-      log.info(
-        "Wait for threads are terminated for {} miliseconds. Remaining thread count - {}",
-        THREAD_WAIT_TIME_MILI,
-        Thread.activeCount()
-      );
-    }
+    //sercice 클래스 실행, Runnable이지만 신규 스레드로 실행하지 않고 직접 호출
+    context.getBean(DateService.class).run();
 
     double spendTime = (System.currentTimeMillis() - startTime) / 1000.0;
 
