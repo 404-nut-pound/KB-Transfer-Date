@@ -23,23 +23,22 @@ public class KbTransferDateApplication {
    * 단, 신규 스레드(runnable run, callable call, new Class() 등)에서는 사용 불가
    */
   private static void setRuntimeVariables() {
+    LocalDateTime now = LocalDateTime.now();
+
     MDC.put("THREAD_WAIT_TIME_MILI", String.valueOf(THREAD_WAIT_TIME_MILI));
     MDC.put(
       "OPERATE_yyyyMM",
-      LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMM"))
+      now.format(DateTimeFormatter.ofPattern("yyyyMM"))
     );
     MDC.put(
       "OPERATE_ddHHmm",
-      LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddHHmm"))
+      now.format(DateTimeFormatter.ofPattern("ddHHmm"))
     );
     MDC.put(
       "OPERATE_yyyy-MM-dd",
-      LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+      now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     );
-    MDC.put(
-      "OPERATE_HH-mm",
-      LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH-mm"))
-    );
+    MDC.put("OPERATE_HH-mm", now.format(DateTimeFormatter.ofPattern("HH-mm")));
   }
 
   public static void main(String[] args) throws Exception {
