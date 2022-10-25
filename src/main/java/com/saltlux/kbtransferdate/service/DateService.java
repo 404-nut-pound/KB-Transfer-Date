@@ -219,7 +219,7 @@ public class DateService implements Runnable {
         (siteCode, productOutputDtoList) -> {
           //포맷 - /data/kb_guest/makeup/file/json/yyyyMM/ddHHmm/siteCode/
           //예시 - /data/kb_guest/makeup/file/json/202210/120005/002/
-          //날짜와 시간은 프로그램 실행 시점의 값이 입력 됨
+          //날짜는 대상 일자, 시간은 프로그램 실행 시점의 값이 입력 됨
           final String formattedProductOutputPath = String.format(
             productOutputPath,
             operateFullYearMonth,
@@ -229,7 +229,7 @@ public class DateService implements Runnable {
 
           //포맷 - yyyy-MM-dd_HH-mm_siteCode_productList.json
           //예시 - 2022-10-21_00-05_002_productList.json
-          //날짜와 시간은 프로그램 실행 시점의 값이 입력 됨
+          //날짜는 대상 일자, 시간은 프로그램 실행 시점의 값이 입력 됨
           final String formattedProductOutputFileName = String.format(
             productOutputFileName,
             operateDateHyphen,

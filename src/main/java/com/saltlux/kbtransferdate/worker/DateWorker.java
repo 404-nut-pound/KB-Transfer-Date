@@ -39,9 +39,6 @@ public class DateWorker
 
   private KBMongoRepoImpl kbMongoRepoImpl;
 
-  @Builder.Default
-  JsonMapper jsonMapper = JsonMapper.builder().build();
-
   @Override
   public Map<String, List<KBTransferProductOutputDto>> call() {
     if (targetDate == null) {
@@ -96,6 +93,8 @@ public class DateWorker
       "DateWorker starts with list size - {}",
       kbMetaDevEntityList.size()
     );
+
+    final JsonMapper jsonMapper = JsonMapper.builder().build();
 
     //productList.json 생성용 목록
     Map<String, List<KBTransferProductOutputDto>> productOutputDtoBySiteCodeMap = new ConcurrentHashMap<>();
@@ -157,7 +156,7 @@ public class DateWorker
         //result.json 파일 생성 시작
         //포맷 - /data/kb_guest/makeup/file/json/yyyyMM/ddHHmm/siteCode/categoryCode/json/
         //예시 - /data/kb_guest/makeup/file/json/202210/120005/002/C10227/json/
-        //날짜와 시간은 프로그램 실행 시점의 값이 입력 됨
+        //날짜는 대상 일자, 시간은 프로그램 실행 시점의 값이 입력 됨
         final String formattedResultOutputPath = String.format(
           resultOutputPath,
           operateFullYearMonth,
@@ -168,7 +167,7 @@ public class DateWorker
 
         //포맷 - yyyy-MM-dd_HH-mm_siteCode_categoryCode_result.json
         //예시 - 2022-10-21_00-05_002_C10227_result.json
-        //날짜와 시간은 프로그램 실행 시점의 값이 입력 됨
+        //날짜는 대상 일자, 시간은 프로그램 실행 시점의 값이 입력 됨
         final String formattedResultOutputFileName = String.format(
           resultOutputFileName,
           operateDateHyphen,
