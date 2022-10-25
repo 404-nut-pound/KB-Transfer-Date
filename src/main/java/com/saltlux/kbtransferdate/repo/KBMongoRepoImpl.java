@@ -22,16 +22,16 @@ public class KBMongoRepoImpl {
    * 입력한 date를 기준으로 다음 날까지 입력된 데이터를 조회함
    * ex) 20221020 -> 20221020 ~ 20221021 사이에 생성된 데이터
    *
+   * @param targetDate
    * @param agentId
-   * @param date
    * @return
    */
   public List<KBMongoCollection> getKBMongoCollectionListByAgentIdAndCreateDateBetween(
-    final String date,
+    final String targetDate,
     final int agentId
   ) {
     LocalDate fromDate = LocalDate.parse(
-      date,
+      targetDate,
       DateTimeFormatter.ofPattern("yyyyMMdd")
     );
     LocalDate toDate = fromDate.plusDays(1);
@@ -43,6 +43,14 @@ public class KBMongoRepoImpl {
         new ObjectId(AppUtil.getDateFromLocalDate(fromDate)),
         new ObjectId(AppUtil.getDateFromLocalDate(toDate))
       )
+      // 기존 조회 조건인 create_time으로 구성 시
+      // 조회 timeout 발생함
+      // String.format(
+      //   "{'agentid': %d, create_date: {$gte: \"%s 00:00:00\", $lt: \"%s 00:00:00\"}}",
+      //   agentId,
+      //   fromDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+      //   toDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+      // )
     );
 
     return mongoTemplate.find(basicQuery, KBMongoCollection.class);
