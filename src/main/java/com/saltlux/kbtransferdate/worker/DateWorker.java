@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 @Getter
 @Builder
@@ -126,31 +127,37 @@ public class DateWorker
         List<KBTransferResultOutputDto> resultOutputDtoList = new ArrayList<KBTransferResultOutputDto>();
 
         for (KBMongoCollection kbMongoCollection : kbMongoCollectionList) {
-          resultOutputDtoList.add(
-            KBTransferResultOutputDto
-              .builder()
-              .productName(kbMongoCollection.getPrName())
-              .siteCode(kbMetaDevEntity.getSiteCode())
-              .categoryCode(kbMetaDevEntity.getCategoryCode())
-              .summary(kbMongoCollection.getSummary())
-              .crawlDate(kbMongoCollection.getCreateDate())
-              .prCode(kbMongoCollection.getPrCode())
-              .url(kbMongoCollection.getUrl())
-              .valueTable(kbMongoCollection.getValueTable())
-              ._id(
-                String.format("%s_000", kbMongoCollection.get_id().toString())
-              )
-              .key(kbMongoCollection.getKey())
-              .keyPath(
-                String.format(
-                  "%s#@#%s",
-                  kbMongoCollection.getKeyGroup(),
-                  kbMongoCollection.getKey()
+          //pr_name과 key가 빈 값이 아닌 항목만 저장
+          if (
+            StringUtils.hasText(kbMongoCollection.getPrName()) &&
+            StringUtils.hasText(kbMongoCollection.getKey())
+          ) {
+            resultOutputDtoList.add(
+              KBTransferResultOutputDto
+                .builder()
+                .productName(kbMongoCollection.getPrName())
+                .siteCode(kbMetaDevEntity.getSiteCode())
+                .categoryCode(kbMetaDevEntity.getCategoryCode())
+                .summary(kbMongoCollection.getSummary())
+                .crawlDate(kbMongoCollection.getCreateDate())
+                .prCode(kbMongoCollection.getPrCode())
+                .url(kbMongoCollection.getUrl())
+                .valueTable(kbMongoCollection.getValueTable())
+                ._id(
+                  String.format("%s_000", kbMongoCollection.get_id().toString())
                 )
-              )
-              .value(kbMongoCollection.getValue())
-              .build()
-          );
+                .key(kbMongoCollection.getKey())
+                .keyPath(
+                  String.format(
+                    "%s#@#%s",
+                    kbMongoCollection.getKeyGroup(),
+                    kbMongoCollection.getKey()
+                  )
+                )
+                .value(kbMongoCollection.getValue())
+                .build()
+            );
+          }
         }
 
         //result.json 파일 생성 시작
@@ -212,9 +219,14 @@ public class DateWorker
           new ArrayList<>()
         );
 
+        //pr_name이 빈 값이 아닌 항목만 저장
         Set<String> productNameSet = kbMongoCollectionList
           .stream()
-          .map(kbMongoCollection -> kbMongoCollection.getPrName())
+          .filter(
+            kbMongoCollection ->
+              StringUtils.hasText(kbMongoCollection.getPrName())
+          )
+          .map(KBMongoCollection::getPrName)
           .collect(Collectors.toSet());
 
         productOutputDtoList.add(
